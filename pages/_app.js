@@ -1,11 +1,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/react-in-jsx-scope */
-import { Provider } from 'react-redux';
 import App from 'next/app';
-import withRedux from 'next-redux-wrapper';
-import configStore from '../store';
+import { wrapper } from '../store';
 
-export default withRedux(configStore, { debug: true })(
+export default wrapper.withRedux(
   class MyApp extends App {
     static async getInitialProps({ Component, ctx }) {
       return {
@@ -18,11 +16,9 @@ export default withRedux(configStore, { debug: true })(
     }
 
     render() {
-      const { Component, pageProps, store } = this.props;
+      const { Component, pageProps } = this.props;
       return (
-        <Provider store={store}>
-          <Component {...pageProps} />
-        </Provider>
+        <Component {...pageProps} />
       );
     }
   },
